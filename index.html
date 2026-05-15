@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thai House Leuven — Authentieke Thaise Streetfood since 1991</title>
+  <meta name="description" content="Thai House op Alfons Smetsplein 11 Leuven — eerste authentieke Thai in Leuven since 1991. Pad Thai, curry's, noodle soup. Dine-in, afhaling, Uber Eats, Deliveroo & Takeaway." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --white:      #ffffff;
+      --green:      #1a6b3a;
+      --green-dark: #0f3d1e;
+      --green-mid:  #155c30;
+      --sage:       #e8f5ee;
+      --orange:     #e8670a;
+      --orange-dk:  #c95508;
+      --cream:      #fdf8f0;
+      --charcoal:   #1a1a1a;
+      --grey:       #5a6a5a;
+      --border-g:   #c5dfc8;
+      --border-o:   #f5c4a0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      color: var(--charcoal);
+      background: var(--white);
+      line-height: 1.7;
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ── FADE-UP ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      padding: 12px 26px;
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.22s;
+      border: 2px solid transparent;
+    }
+    .btn-green {
+      background: var(--green);
+      color: var(--white);
+      border-color: var(--green);
+    }
+    .btn-green:hover { background: var(--green-mid); border-color: var(--green-mid); }
+    .btn-orange {
+      background: var(--orange);
+      color: var(--white);
+      border-color: var(--orange);
+    }
+    .btn-orange:hover { background: var(--orange-dk); border-color: var(--orange-dk); }
+    .btn-orange-outline {
+      background: transparent;
+      color: var(--orange);
+      border-color: var(--orange);
+    }
+    .btn-orange-outline:hover { background: var(--orange); color: var(--white); }
+    .btn-white {
+      background: var(--white);
+      color: var(--green);
+      border-color: var(--white);
+      font-weight: 600;
+    }
+    .btn-white:hover { background: var(--cream); }
+    .btn-white-outline {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,0.55);
+    }
+    .btn-white-outline:hover { background: rgba(255,255,255,0.12); border-color: var(--white); }
+
+    /* ══════════════════════════════
+       NAVBAR
+    ══════════════════════════════ */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: var(--white);
+      border-bottom: 1px solid transparent;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    #navbar.scrolled {
+      border-color: var(--green);
+      box-shadow: 0 2px 16px rgba(26,107,58,0.10);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .nav-logo img {
+      max-height: 55px;
+      object-fit: contain;
+      display: block;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-shrink: 0;
+    }
+    .lang-toggle {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      user-select: none;
+      color: var(--green);
+    }
+    .lang-toggle span { transition: opacity 0.2s; }
+    .lang-toggle span.active { opacity: 1; }
+    .lang-toggle span:not(.active):not(.sep) { opacity: 0.35; }
+    .lang-toggle .sep { margin: 0 4px; color: var(--border-g); opacity: 1; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--charcoal);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: var(--white);
+      border-bottom: 2px solid var(--green);
+      padding: 16px 28px 24px;
+      z-index: 999;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border-g);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ══════════════════════════════
+       HERO
+    ══════════════════════════════ */
+    #hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 28px 80px;
+      background-image: url('images/hero.png');
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,60,0,0.55);
+    }
+    .hero-watermark {
+      position: absolute;
+      right: 4%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: clamp(6rem, 14vw, 13rem);
+      color: rgba(255,255,255,0.04);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1.1;
+      text-align: right;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      text-align: center;
+      color: var(--white);
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 20px;
+      padding: 8px 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.05em;
+      margin-bottom: 28px;
+    }
+    .hero-h1 {
+      font-size: clamp(3.8rem, 9vw, 7rem);
+      font-style: italic;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 0.95;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: #ffd09a;
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .hero-noodle-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--orange);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 28px;
+      animation: pulseBadge 2.5s infinite;
+      box-shadow: 0 0 0 0 rgba(232,103,10,0.5);
+    }
+    @keyframes pulseBadge {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232,103,10,0.5); }
+      50%       { box-shadow: 0 0 0 10px rgba(232,103,10,0); }
+    }
+    .hero-icons {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    .hero-icon-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+    }
+    .icon-emoji { font-size: 1.1rem; }
+    .hero-ctas {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .hero-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .pulse-dot {
+      width: 8px; height: 8px;
+      background: #7dce8f;
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2.2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.4; transform: scale(1.5); }
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      color: rgba(255,255,255,0.35);
+      font-size: 1.3rem;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ══════════════════════════════
+       WEEKEND SPECIAL BANNER
+    ══════════════════════════════ */
+    #weekend {
+      background: var(--orange);
+      padding: 52px 28px;
+      text-align: center;
+    }
+    .weekend-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+    .weekend-desc {
+      font-size: 0.98rem;
+      color: rgba(255,255,255,0.88);
+      max-width: 600px;
+      margin: 0 auto 18px;
+      line-height: 1.7;
+    }
+    .weekend-quote {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .weekend-quote::before { content: '\201C'; }
+    .weekend-quote::after  { content: '\201D'; }
+
+    /* ══════════════════════════════
+       SECTIONS SHARED
+    ══════════════════════════════ */
+    section { padding: 88px 28px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+    .section-label.green { color: var(--green); }
+    .section-title {
+      font-size: clamp(1.9rem, 3.5vw, 2.7rem);
+      font-style: italic;
+      line-height: 1.2;
+      margin-bottom: 48px;
+    }
+    .section-title.light { color: var(--white); }
+    .section-title.cream { color: var(--cream); }
+
+    /* ══════════════════════════════
+       PILLAR STRIP
+    ══════════════════════════════ */
+    #pillars { background: var(--sage); padding: 64px 28px; }
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .pillar-card {
+      background: var(--white);
+      border: 1.5px solid var(--border-g);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+    }
+    .pillar-card:hover {
+      border-color: var(--green);
+      box-shadow: 0 6px 24px rgba(26,107,58,0.12);
+      transform: translateY(-3px);
+    }
+    .pillar-emoji { font-size: 2.2rem; margin-bottom: 12px; display: block; }
+    .pillar-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--green);
+      margin-bottom: 8px;
+    }
+    .pillar-desc { font-size: 0.83rem; color: var(--grey); line-height: 1.6; }
+
+    /* ══════════════════════════════
+       MENU HIGHLIGHTS
+    ══════════════════════════════ */
+    #menu { background: var(--white); }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .spec-card {
+      border: 2px solid var(--orange);
+      border-radius: 12px;
+      padding: 34px 26px;
+      position: relative;
+      background: var(--white);
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .spec-card:hover {
+      box-shadow: 0 8px 32px rgba(232,103,10,0.12);
+      transform: translateY(-3px);
+    }
+    .spec-badge {
+      position: absolute;
+      top: -13px; right: 18px;
+      background: var(--green);
+      color: var(--white);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    .spec-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.76rem;
+      color: var(--orange);
+      font-weight: 600;
+      background: #fff3ea;
+      border-radius: 4px;
+      padding: 3px 8px;
+      margin-bottom: 12px;
+    }
+    .spec-icon { font-size: 2.2rem; margin-bottom: 12px; display: block; }
+    .spec-card h3 {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-bottom: 10px;
+      color: var(--charcoal);
+    }
+    .spec-card p { font-size: 0.88rem; color: var(--grey); line-height: 1.75; }
+
+    .menu-cats {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .menu-cat {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--green);
+      background: var(--sage);
+      border: 1.5px solid var(--border-g);
+      border-radius: 20px;
+      padding: 7px 16px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .menu-cat:hover { background: var(--green); color: var(--white); border-color: var(--green); }
+    .menu-cta { text-align: center; }
+    .menu-cta a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--green);
+      border-bottom: 1.5px solid var(--green);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+    .menu-cta a:hover { opacity: 0.7; }
+
+    /* ══════════════════════════════
+       ABOUT
+    ══════════════════════════════ */
+    #about { background: var(--green); padding: 88px 28px; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-img img {
+      width: 100%;
+      border-radius: 12px;
+      border: 3px solid var(--orange);
+      object-fit: cover;
+      max-height: 480px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    }
+    .about-sub {
+      font-style: italic;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 18px;
+      font-size: 1rem;
+    }
+    .about-body {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.85;
+      margin-bottom: 28px;
+    }
+    .about-stats {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .about-stat {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--green);
+      background: var(--cream);
+      border-radius: 20px;
+      padding: 7px 14px;
+    }
+    .about-stat i { color: var(--orange); }
+
+    /* ══════════════════════════════
+       GALLERY
+    ══════════════════════════════ */
+    #gallery { background: var(--cream); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .gallery-item {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+    .gallery-item:hover { border-color: var(--orange); }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.07); }
+
+    /* ══════════════════════════════
+       REVIEWS
+    ══════════════════════════════ */
+    #reviews { background: var(--white); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    .review-card {
+      border: 1.5px solid var(--border-g);
+      border-radius: 12px;
+      padding: 28px 22px;
+      background: var(--sage);
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .review-card:hover {
+      box-shadow: 0 6px 24px rgba(26,107,58,0.1);
+      transform: translateY(-2px);
+    }
+    .review-stars { color: var(--orange); font-size: 0.95rem; letter-spacing: 2px; margin-bottom: 12px; }
+    .review-text { font-size: 0.88rem; color: var(--grey); font-style: italic; line-height: 1.75; margin-bottom: 14px; }
+    .review-source { font-size: 0.76rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); }
+    .reviews-cta { text-align: center; }
+    .reviews-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--grey);
+      border: 1.5px solid var(--border-g);
+      border-radius: 6px;
+      padding: 12px 22px;
+      background: var(--sage);
+      transition: all 0.2s;
+    }
+    .reviews-cta a:hover { border-color: var(--green); color: var(--green); }
+
+    /* ══════════════════════════════
+       DELIVERY
+    ══════════════════════════════ */
+    #delivery { background: var(--orange); padding: 80px 28px; text-align: center; }
+    #delivery .section-label { color: rgba(255,255,255,0.7); }
+    #delivery .section-title { color: var(--white); margin-bottom: 36px; }
+    .delivery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 700px;
+      margin: 0 auto 36px;
+    }
+    .delivery-card {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .delivery-card:hover { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); }
+    .delivery-emoji { font-size: 2.2rem; margin-bottom: 10px; display: block; }
+    .delivery-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .delivery-card p { font-size: 0.8rem; color: rgba(255,255,255,0.65); }
+    .delivery-direct p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 16px;
+    }
+
+    /* ══════════════════════════════
+       CONTACT
+    ══════════════════════════════ */
+    #contact { background: var(--sage); }
+    #contact .section-label { color: var(--green); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .contact-info { color: var(--charcoal); }
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+      font-size: 0.93rem;
+    }
+    .contact-detail i { color: var(--green); width: 18px; flex-shrink: 0; margin-top: 3px; }
+    .contact-detail a { color: var(--charcoal); transition: color 0.2s; }
+    .contact-detail a:hover { color: var(--green); }
+    .hours-table { width: 100%; margin-top: 6px; }
+    .hours-table tr td { padding: 4px 0; font-size: 0.86rem; }
+    .hours-table tr td:first-child { color: var(--grey); width: 52px; font-weight: 500; }
+    .weekend-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 16px;
+      background: var(--orange);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.84rem;
+      font-weight: 500;
+    }
+    .weekend-note i { flex-shrink: 0; margin-top: 2px; }
+    .map-wrap { margin-top: 22px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(26,107,58,0.1); }
+
+    /* Contact Form */
+    .contact-form h3 {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: var(--green);
+      margin-bottom: 24px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+    .form-group input,
+    .form-group textarea {
+      background: var(--white);
+      border: 1.5px solid var(--border-g);
+      border-radius: 6px;
+      padding: 11px 14px;
+      color: var(--charcoal);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(26,107,58,0.1);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-success {
+      display: none;
+      background: rgba(26,107,58,0.08);
+      border: 1.5px solid rgba(26,107,58,0.25);
+      border-radius: 8px;
+      padding: 16px 20px;
+      color: var(--green);
+      font-size: 0.92rem;
+      margin-top: 12px;
+    }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    #footer {
+      background: var(--green-dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 44px 28px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      align-items: center;
+      gap: 24px;
+    }
+    .footer-logo img { max-height: 45px; object-fit: contain; margin-bottom: 8px; }
+    .footer-logo p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.6; }
+    .footer-center {
+      text-align: center;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.2);
+      line-height: 1.9;
+    }
+    .footer-right { text-align: right; }
+    .footer-right a {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.83rem;
+      color: var(--orange);
+      margin-bottom: 8px;
+      transition: opacity 0.2s;
+    }
+    .footer-right a:hover { opacity: 0.7; }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 1024px) {
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-right .btn { display: none; }
+      .hamburger { display: flex; }
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+      .spec-grid    { grid-template-columns: 1fr; gap: 40px; }
+      .about-grid   { grid-template-columns: 1fr; gap: 36px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .delivery-grid { grid-template-columns: 1fr; max-width: 320px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+      .footer-inner { grid-template-columns: 1fr; text-align: center; gap: 20px; }
+      .footer-right { text-align: center; }
+      .footer-right a { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 56px 16px; }
+      #pillars, #weekend, #delivery { padding: 52px 16px; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+      .hero-ctas .btn { width: 100%; max-width: 300px; text-align: center; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .pillars-grid { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     NAVBAR
+══════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="images/logo.png" alt="Thai House Leuven" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#menu"     data-nl="Menu"      data-en="Menu">Menu</a></li>
+      <li><a href="#about"    data-nl="Over ons"  data-en="About">Over ons</a></li>
+      <li><a href="#delivery" data-nl="Bezorging" data-en="Delivery">Bezorging</a></li>
+      <li><a href="#contact"  data-nl="Contact"   data-en="Contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <a href="https://www.thaihouse.be/menu.php" target="_blank" rel="noopener"
+         class="btn btn-orange" data-nl="Bestel nu" data-en="Order now">Bestel nu</a>
+      <div class="lang-toggle" id="langToggle">
+        <span id="langNL" class="active">NL</span>
+        <span class="sep">|</span>
+        <span id="langEN">EN</span>
+      </div>
+    </div>
+
+    <div class="hamburger" id="hamburger" aria-label="Menu" role="button" tabindex="0">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#menu"     data-nl="Menu"      data-en="Menu">Menu</a>
+  <a href="#about"    data-nl="Over ons"  data-en="About">Over ons</a>
+  <a href="#delivery" data-nl="Bezorging" data-en="Delivery">Bezorging</a>
+  <a href="#contact"  data-nl="Contact"   data-en="Contact">Contact</a>
+  <a href="https://www.thaihouse.be/menu.php" target="_blank" rel="noopener"
+     class="btn btn-orange" style="text-align:center;"
+     data-nl="Bestel nu" data-en="Order now">Bestel nu</a>
+</div>
+
+<!-- ══════════════════════════════
+     HERO
+══════════════════════════════ -->
+<section id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-watermark">ไทย<br>เฮ้าส์</div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      🇹🇭 <span data-nl="Sinds 1991 · Eerste authentieke Thai in Leuven"
+                data-en="Since 1991 · First authentic Thai in Leuven">
+        Sinds 1991 · Eerste authentieke Thai in Leuven
+      </span>
+    </div>
+
+    <h1 class="hero-h1">Thai House</h1>
+
+    <p class="hero-sub">
+      <span data-nl="Authentieke Thaise streetfood door Thaise familie<br>— al meer dan 30 jaar in Leuven"
+            data-en="Authentic Thai street food by Thai family<br>— over 30 years in Leuven">
+        Authentieke Thaise streetfood door Thaise familie<br>— al meer dan 30 jaar in Leuven
+      </span>
+    </p>
+
+    <div class="hero-noodle-badge">
+      🍜 <span data-nl="Weekend Noodle Soup — Vr &amp; Za 11:00–14:00 · op=op!"
+               data-en="Weekend Noodle Soup — Fri &amp; Sat 11:00–14:00 · limited!">
+        Weekend Noodle Soup — Vr &amp; Za 11:00–14:00 · op=op!
+      </span>
+    </div>
+
+    <div class="hero-icons">
+      <span class="hero-icon-item"><span class="icon-emoji">🍜</span> Noodle soup</span>
+      <span class="hero-icon-item"><span class="icon-emoji">🍛</span> Curry</span>
+      <span class="hero-icon-item"><span class="icon-emoji">🌱</span> Vegan</span>
+      <span class="hero-icon-item"><span class="icon-emoji">💰</span>
+        <span data-nl="Studentenprijzen" data-en="Student prices">Studentenprijzen</span>
+      </span>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#menu" class="btn btn-green"
+         data-nl="Bekijk ons menu" data-en="View our menu">Bekijk ons menu</a>
+      <a href="https://www.thaihouse.be/menu.php" target="_blank" rel="noopener"
+         class="btn btn-orange-outline"
+         data-nl="Bestel online" data-en="Order online">Bestel online</a>
+    </div>
+
+    <div class="hero-status">
+      <span class="pulse-dot"></span>
+      <span data-nl="Vr–Za: 12:00–22:00 · Zo: 12:00–21:00"
+            data-en="Fri–Sat: 12:00–22:00 · Sun: 12:00–21:00">
+        Vr–Za: 12:00–22:00 · Zo: 12:00–21:00
+      </span>
+    </div>
+  </div>
+
+  <div class="hero-scroll"><i class="fa-solid fa-chevron-down"></i></div>
+</section>
+
+<!-- ══════════════════════════════
+     WEEKEND SPECIAL BANNER
+══════════════════════════════ -->
+<div id="weekend">
+  <div class="section-inner" style="max-width:900px;">
+    <p class="weekend-title fade-up">
+      <span data-nl="🍜 WEEKEND NOODLE SOUP — Vrijdag &amp; Zaterdag"
+            data-en="🍜 WEEKEND NOODLE SOUP — Friday &amp; Saturday">
+        🍜 WEEKEND NOODLE SOUP — Vrijdag &amp; Zaterdag
+      </span>
+    </p>
+    <p class="weekend-desc fade-up">
+      <span data-nl="Elke vrijdag en zaterdag van 11:00 tot 14:00. Verse noedelsoep à la minute bereid — populairste gerecht! Wees er vroeg bij, want OP = OP. Ticket bij aankomst."
+            data-en="Every Friday and Saturday from 11:00 to 14:00. Fresh noodle soup prepared à la minute — most popular dish! Get there early, limited portions. Ticket on arrival.">
+        Elke vrijdag en zaterdag van 11:00 tot 14:00. Verse noedelsoep à la minute bereid — populairste gerecht! Wees er vroeg bij, want OP = OP. Ticket bij aankomst.
+      </span>
+    </p>
+    <p class="weekend-quote fade-up">Quick, cheap, tasty, authentic. Weekend noodles are a must! — Google</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PILLAR STRIP
+══════════════════════════════ -->
+<section id="pillars">
+  <div class="section-inner">
+    <div class="pillars-grid">
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">🇹🇭</span>
+        <div class="pillar-title" data-nl="Thaise familie" data-en="Thai family">Thaise familie</div>
+        <p class="pillar-desc"
+           data-nl="Sinds 1991 — 2de generatie, 3de op komst! Pionnier van Thais eten in Leuven"
+           data-en="Since 1991 — 2nd generation, 3rd coming! Pioneer of Thai food in Leuven">
+          Sinds 1991 — 2de generatie, 3de op komst! Pionnier van Thais eten in Leuven
+        </p>
+      </div>
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">🌿</span>
+        <div class="pillar-title" data-nl="Dagvers" data-en="Daily fresh">Dagvers</div>
+        <p class="pillar-desc"
+           data-nl="Al onze gerechten dagvers bereid"
+           data-en="All our dishes freshly prepared daily">
+          Al onze gerechten dagvers bereid
+        </p>
+      </div>
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">💰</span>
+        <div class="pillar-title" data-nl="Studentenprijzen" data-en="Student prices">Studentenprijzen</div>
+        <p class="pillar-desc"
+           data-nl="Pad Thai vanaf €5 — betaalbaar voor iedereen!"
+           data-en="Pad Thai from €5 — affordable for everyone!">
+          Pad Thai vanaf €5 — betaalbaar voor iedereen!
+        </p>
+      </div>
+      <div class="pillar-card fade-up">
+        <span class="pillar-emoji">🌱</span>
+        <div class="pillar-title" data-nl="Vegan opties" data-en="Vegan options">Vegan opties</div>
+        <p class="pillar-desc"
+           data-nl="Vegan Pad Thai, springrolls en meer"
+           data-en="Vegan Pad Thai, springrolls and more">
+          Vegan Pad Thai, springrolls en meer
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     MENU HIGHLIGHTS
+══════════════════════════════ -->
+<section id="menu">
+  <div class="section-inner">
+    <p class="section-label green fade-up" data-nl="Thaise keuken" data-en="Thai cuisine">Thaise keuken</p>
+    <h2 class="section-title fade-up" data-nl="Onze Specialiteiten" data-en="Our Specialities">Onze Specialiteiten</h2>
+
+    <div class="spec-grid">
+      <div class="spec-card fade-up">
+        <span class="spec-badge">⭐ #1 BESTSELLER</span>
+        <div class="spec-rating"><i class="fa-solid fa-star"></i> 90% · 257 reviews</div>
+        <span class="spec-icon">🍜</span>
+        <h3 data-nl="Pad Thai ผัดไทย" data-en="Pad Thai ผัดไทย">Pad Thai ผัดไทย</h3>
+        <p data-nl="Ons meest bestelde gerecht! Kip of tofu, rijstnoedels, pinda's, tamarinde. Vegan versie beschikbaar. Vanaf €5–€10.95"
+           data-en="Our most ordered dish! Chicken or tofu, rice noodles, peanuts, tamarind. Vegan option available. From €5–€10.95">
+          Ons meest bestelde gerecht! Kip of tofu, rijstnoedels, pinda's, tamarinde. Vegan versie beschikbaar. Vanaf €5–€10.95
+        </p>
+      </div>
+      <div class="spec-card fade-up">
+        <div class="spec-rating"><i class="fa-solid fa-star"></i> 89%+ · Rood, Groen, Geel</div>
+        <span class="spec-icon">🍛</span>
+        <h3 data-nl="Curry's — Rood, Groen, Geel" data-en="Curries — Red, Green, Yellow">Curry's — Rood, Groen, Geel</h3>
+        <p data-nl="Drie klassieke Thaise curry's — licht pikant tot niet pikant. Kip, tofu of groenten. €10.95"
+           data-en="Three classic Thai curries — mildly spicy to not spicy. Chicken, tofu or vegetables. €10.95">
+          Drie klassieke Thaise curry's — licht pikant tot niet pikant. Kip, tofu of groenten. €10.95
+        </p>
+      </div>
+      <div class="spec-card fade-up">
+        <div class="spec-rating"><i class="fa-solid fa-star"></i> 85% · 191 reviews</div>
+        <span class="spec-icon">🥟</span>
+        <h3 data-nl="Mini Veggie Springrolls ปอเปี๊ยะ" data-en="Mini Veggie Springrolls ปอเปี๊ยะ">Mini Veggie Springrolls ปอเปี๊ยะ</h3>
+        <p data-nl="4 stuks knapperige lentjeroepen — perfect als starter of snack. €3.75"
+           data-en="4 crispy spring rolls — perfect as starter or snack. €3.75">
+          4 stuks knapperige springrolls — perfect als starter of snack. €3.75
+        </p>
+      </div>
+    </div>
+
+    <div class="menu-cats fade-up">
+      <span class="menu-cat">🥡 Snacks</span>
+      <span class="menu-cat">🍛 <span data-nl="Thaise Gerechten" data-en="Thai Dishes">Thaise Gerechten</span></span>
+      <span class="menu-cat">🍜 <span data-nl="Noedelsoep" data-en="Noodle Soup">Noedelsoep</span></span>
+      <span class="menu-cat">🌱 Vegan</span>
+      <span class="menu-cat">🍹 Extra</span>
+    </div>
+
+    <div class="menu-cta fade-up">
+      <a href="https://www.thaihouse.be/menu.php" target="_blank" rel="noopener">
+        <span data-nl="Volledig menu &amp; online bestellen →" data-en="Full menu &amp; order online →">Volledig menu &amp; online bestellen →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     ABOUT
+══════════════════════════════ -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img fade-up">
+        <img src="https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800"
+             alt="Thaise streetfood keuken" loading="lazy" />
+      </div>
+      <div class="about-text">
+        <p class="section-label fade-up" style="color:rgba(255,255,255,0.5);"
+           data-nl="Ons verhaal" data-en="Our story">Ons verhaal</p>
+        <h2 class="section-title light fade-up" style="margin-bottom:14px;"
+            data-nl="Leuven's eerste authentieke Thai."
+            data-en="Leuven's first authentic Thai.">
+          Leuven's eerste authentieke Thai.
+        </h2>
+        <p class="about-sub fade-up"
+           data-nl="Thaise streetfood door Thaise familie — since 1991."
+           data-en="Thai street food by Thai family — since 1991.">
+          Thaise streetfood door Thaise familie — since 1991.
+        </p>
+        <p class="about-body fade-up"
+           data-nl="Thai House opende in 1991 als het allereerste authentieke Thaise restaurant in Leuven. Meer dan 30 jaar later runt de 2de generatie van de Thaise familie het restaurant, met de 3de generatie in de maak. Alle gerechten worden dagvers bereid met authentieke ingrediënten. Buiten genieten op ons terras op Alfons Smetsplein."
+           data-en="Thai House opened in 1991 as the very first authentic Thai restaurant in Leuven. Over 30 years later, the 2nd generation of the Thai family runs the restaurant, with the 3rd generation on the way. All dishes freshly prepared daily with authentic ingredients. Enjoy outdoor on our terrace at Alfons Smetsplein.">
+          Thai House opende in 1991 als het allereerste authentieke Thaise restaurant in Leuven. Meer dan 30 jaar later runt de 2de generatie van de Thaise familie het restaurant, met de 3de generatie in de maak. Alle gerechten worden dagvers bereid met authentieke ingrediënten. Buiten genieten op ons terras op Alfons Smetsplein.
+        </p>
+        <div class="about-stats fade-up">
+          <span class="about-stat"><i class="fa-solid fa-clock-rotate-left"></i>
+            <span data-nl="Seit 1991" data-en="Since 1991">Seit 1991</span>
+          </span>
+          <span class="about-stat"><i class="fa-solid fa-users"></i>
+            <span data-nl="2de generatie" data-en="2nd generation">2de generatie</span>
+          </span>
+          <span class="about-stat"><i class="fa-solid fa-house-heart"></i>
+            <span data-nl="Thaise familie" data-en="Thai family">Thaise familie</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     GALLERY
+══════════════════════════════ -->
+<section id="gallery">
+  <div class="section-inner">
+    <p class="section-label green fade-up" data-nl="Foto's" data-en="Photos">Foto's</p>
+    <h2 class="section-title fade-up" data-nl="Onze Gerechten" data-en="Our Food">Onze Gerechten</h2>
+
+    <div class="gallery-grid">
+      <div class="gallery-item fade-up">
+        <img src="https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=600"
+             alt="Thai Pad Thai" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-up">
+        <img src="https://images.unsplash.com/photo-1571167530149-c1105da4bfe3?w=600"
+             alt="Thai curry" loading="lazy" />
+      </div>
+      <div class="gallery-item fade-up">
+        <img src="https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=600"
+             alt="Thai noodle soup" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     REVIEWS
+══════════════════════════════ -->
+<section id="reviews">
+  <div class="section-inner">
+    <p class="section-label green fade-up" data-nl="Gastrecensies" data-en="Guest reviews">Gastrecensies</p>
+    <h2 class="section-title fade-up" data-nl="Wat onze gasten zeggen" data-en="What our guests say">Wat onze gasten zeggen</h2>
+
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">&ldquo;Excellent authentic food in the middle of college town Leuven. One of our favorite eateries in Belgium. The chef and staff are very friendly — our children love going there every Saturday.&rdquo;</p>
+        <span class="review-source">Google</span>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">&ldquo;Really hidden place near the Rotonde. Always crowded with a waiting line — but it goes really quick! Pad Thai chicken for just €5. Other places ask €15. Definitely worthy!&rdquo;</p>
+        <span class="review-source">Google</span>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">&ldquo;Prijskwaliteit beste plek in Leuven om te eten!!! Quick, cheap, tasty, authentic. Highly recommend the noodle soup on Fri &amp; Sat.&rdquo;</p>
+        <span class="review-source">Google</span>
+      </div>
+    </div>
+
+    <div class="reviews-cta fade-up">
+      <a href="https://maps.google.com/?q=Thai+House+Leuven+Alfons+Smetsplein+11" target="_blank" rel="noopener">
+        <i class="fa-brands fa-google"></i>
+        <span data-nl="Alle reviews op Google Maps" data-en="All reviews on Google Maps">Alle reviews op Google Maps</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     DELIVERY
+══════════════════════════════ -->
+<section id="delivery">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label fade-up" data-nl="Bezorging" data-en="Delivery">Bezorging</p>
+    <h2 class="section-title fade-up" data-nl="Thuis genieten?" data-en="Enjoy at home?">Thuis genieten?</h2>
+
+    <div class="delivery-grid fade-up">
+      <div class="delivery-card">
+        <span class="delivery-emoji">🛵</span>
+        <h3>Uber Eats</h3>
+        <p data-nl="Bestel via Uber Eats" data-en="Order via Uber Eats">Bestel via Uber Eats</p>
+      </div>
+      <div class="delivery-card">
+        <span class="delivery-emoji">🛵</span>
+        <h3>Deliveroo</h3>
+        <p data-nl="Bestel via Deliveroo" data-en="Order via Deliveroo">Bestel via Deliveroo</p>
+      </div>
+      <div class="delivery-card">
+        <span class="delivery-emoji">📱</span>
+        <h3>Takeaway.com</h3>
+        <p data-nl="Ook op Takeaway.com" data-en="Also on Takeaway.com">Ook op Takeaway.com</p>
+      </div>
+    </div>
+
+    <div class="delivery-direct fade-up">
+      <p data-nl="Of bestel rechtstreeks op onze website:" data-en="Or order directly on our website:">Of bestel rechtstreeks op onze website:</p>
+      <a href="https://www.thaihouse.be/menu.php" target="_blank" rel="noopener" class="btn btn-white"
+         data-nl="Bestel op thaihouse.be →" data-en="Order at thaihouse.be →">Bestel op thaihouse.be →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     CONTACT & HOURS
+══════════════════════════════ -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label fade-up" data-nl="Kom langs" data-en="Visit us">Kom langs</p>
+    <h2 class="section-title fade-up" data-nl="Contact &amp; Openingsuren" data-en="Contact &amp; Opening Hours">Contact &amp; Openingsuren</h2>
+
+    <div class="contact-grid">
+      <!-- Info + Map -->
+      <div class="contact-info">
+        <div class="contact-detail fade-up">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Alfons Smetsplein 11, 3000 Leuven</span>
+        </div>
+        <div class="contact-detail fade-up">
+          <i class="fa-solid fa-phone"></i>
+          <a href="tel:+32470532554">+32 470 53 25 54</a>
+        </div>
+        <div class="contact-detail fade-up">
+          <i class="fa-solid fa-envelope"></i>
+          <a href="mailto:office@thaitradehouse.be">office@thaitradehouse.be</a>
+        </div>
+        <div class="contact-detail fade-up">
+          <i class="fa-brands fa-instagram"></i>
+          <a href="https://instagram.com/thaihouseleuven" target="_blank" rel="noopener">@thaihouseleuven</a>
+        </div>
+        <div class="contact-detail fade-up">
+          <i class="fa-solid fa-globe"></i>
+          <a href="https://thaihouse.be" target="_blank" rel="noopener">thaihouse.be</a>
+        </div>
+
+        <div class="contact-detail fade-up" style="align-items:flex-start; margin-top:8px;">
+          <i class="fa-solid fa-clock"></i>
+          <table class="hours-table">
+            <tbody>
+              <tr>
+                <td data-nl="Ma" data-en="Mon">Ma</td>
+                <td>11:00–14:00 &amp; 17:00–20:00</td>
+              </tr>
+              <tr>
+                <td data-nl="Di–Do" data-en="Tue–Thu">Di–Do</td>
+                <td>17:30–21:30</td>
+              </tr>
+              <tr>
+                <td data-nl="Vr" data-en="Fri">Vr</td>
+                <td>12:00–14:30 &amp; 17:30–22:00</td>
+              </tr>
+              <tr>
+                <td data-nl="Za" data-en="Sat">Za</td>
+                <td>12:00–14:30 &amp; 17:30–22:00</td>
+              </tr>
+              <tr>
+                <td data-nl="Zo" data-en="Sun">Zo</td>
+                <td>12:00–14:30 &amp; 17:30–21:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="weekend-note fade-up">
+          <i class="fa-solid fa-bowl-hot"></i>
+          <span data-nl="Weekend Noodle Soup: Vr &amp; Za 11:00–14:00 · op=op!"
+                data-en="Weekend Noodle Soup: Fri &amp; Sat 11:00–14:00 · limited!">
+            Weekend Noodle Soup: Vr &amp; Za 11:00–14:00 · op=op!
+          </span>
+        </div>
+
+        <div class="map-wrap fade-up">
+          <iframe
+            src="https://www.google.com/maps?q=Alfons+Smetsplein+11,+3000+Leuven&output=embed"
+            width="100%" height="280"
+            style="border:0;border-radius:12px;display:block;"
+            allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form fade-up">
+        <h3 data-nl="Stuur ons een bericht" data-en="Send us a message">Stuur ons een bericht</h3>
+
+        <form id="contactForm" novalidate>
+          <div class="form-group">
+            <label data-nl="Naam" data-en="Name">Naam</label>
+            <input type="text" id="fname"
+                   data-placeholder-nl="Uw naam"
+                   data-placeholder-en="Your name"
+                   placeholder="Uw naam" required />
+          </div>
+          <div class="form-group">
+            <label data-nl="Email" data-en="Email">Email</label>
+            <input type="email" id="femail"
+                   data-placeholder-nl="uw@email.com"
+                   data-placeholder-en="your@email.com"
+                   placeholder="uw@email.com" required />
+          </div>
+          <div class="form-group">
+            <label data-nl="Bericht" data-en="Message">Bericht</label>
+            <textarea id="fmessage"
+                      data-placeholder-nl="Uw bericht..."
+                      data-placeholder-en="Your message..."
+                      placeholder="Uw bericht..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-green" style="width:100%;padding:14px;"
+                  data-nl="Verstuur →" data-en="Send →">Verstuur →</button>
+        </form>
+
+        <div class="form-success" id="formSuccess">
+          <span data-nl="Bedankt! We antwoorden zo snel mogelijk."
+                data-en="Thanks! We'll get back to you soon.">
+            Bedankt! We antwoorden zo snel mogelijk.
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img src="images/logo.png" alt="Thai House Leuven" />
+      <p>
+        <span data-nl="Thaise Streetfood · Alfons Smetsplein 11 · Leuven"
+              data-en="Thai Street Food · Alfons Smetsplein 11 · Leuven">
+          Thaise Streetfood · Alfons Smetsplein 11 · Leuven
+        </span>
+      </p>
+    </div>
+
+    <div class="footer-center">
+      <p>© 2026 · Thai House</p>
+      <p><span data-nl="Thaise familie since 1991" data-en="Thai family since 1991">Thaise familie since 1991</span></p>
+      <p style="margin-top:5px;font-size:0.68rem;opacity:0.5;">🇹🇭 Eerste authentieke Thai in Leuven</p>
+    </div>
+
+    <div class="footer-right">
+      <a href="https://instagram.com/thaihouseleuven" target="_blank" rel="noopener">
+        <i class="fa-brands fa-instagram"></i> @thaihouseleuven
+      </a>
+      <a href="https://www.facebook.com/Thai-House-Street-Food-Snack-Leuven" target="_blank" rel="noopener">
+        <i class="fa-brands fa-facebook-f"></i> Facebook
+      </a>
+      <a href="https://www.thaihouse.be/menu.php" target="_blank" rel="noopener">
+        <i class="fa-solid fa-utensils"></i>
+        <span data-nl="Online bestellen" data-en="Order online">Online bestellen</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+<script>
+  /* ── Language system ── */
+  let currentLang = 'nl';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-nl]').forEach(el => {
+      const val = el.getAttribute('data-' + lang);
+      if (val === null) return;
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        el.placeholder = val;
+      } else {
+        el.innerHTML = val;
+      }
+    });
+
+    document.querySelectorAll('[data-placeholder-' + lang + ']').forEach(el => {
+      el.placeholder = el.getAttribute('data-placeholder-' + lang);
+    });
+
+    document.getElementById('langNL').classList.toggle('active', lang === 'nl');
+    document.getElementById('langEN').classList.toggle('active', lang === 'en');
+  }
+
+  document.getElementById('langToggle').addEventListener('click', e => {
+    const t = e.target.closest('#langNL, #langEN');
+    if (!t) return;
+    setLang(t.id === 'langNL' ? 'nl' : 'en');
+  });
+
+  /* ── Navbar scroll ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 24);
+  }, { passive: true });
+
+  /* ── Hamburger ── */
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+  });
+
+  /* ── Smooth scroll ── */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+
+  /* ── IntersectionObserver ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── Contact form ── */
+  const form        = document.getElementById('contactForm');
+  const formSuccess = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!document.getElementById('fname').value.trim())    return;
+    if (!document.getElementById('femail').value.trim())   return;
+    if (!document.getElementById('fmessage').value.trim()) return;
+    form.style.display = 'none';
+    formSuccess.style.display = 'block';
+  });
+
+  /* ── Init ── */
+  setLang('nl');
+</script>
+
+</body>
+</html>
